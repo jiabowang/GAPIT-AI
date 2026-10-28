@@ -27,7 +27,17 @@ The three packages share the same knowledge base and mode code; they differ only
 
 ## Installation
 
-### From GitHub (recommended)
+GAPIT-AI is an **AI-agent skill** — you do not run it directly. After a one-time setup, you talk to your AI agent in plain language, and the agent reads the skill to generate, run, and interpret the GAPIT analysis for you.
+
+### Option 1 — Let the agent install it (recommended)
+
+Tell your agent:
+
+> "Install the GAPIT-AI skill from https://github.com/jiabowang/GAPIT-AI"
+
+The agent clones the repository and places the skill files where it can read them — no manual steps needed.
+
+### Option 2 — Install manually
 
 ```bash
 git clone https://github.com/jiabowang/GAPIT-AI.git
@@ -37,27 +47,17 @@ cd GAPIT-AI
 ./install.sh claude   # Claude Code version
 ```
 
-The installer copies the skill into your agent's skills directory and places the shared data resources alongside it.
-
-### From a release archive
-
-Download the zip for your platform from [Releases](../../releases), unzip it, and place the skill folder into your agent's skills directory.
-
 ## Quick start
 
-```r
-# Load the bundled GAPIT functions
-source("data/gapit-resources/code/gapit_functions.txt")
+Once installed, just ask in plain language:
 
-# Run a GWAS
-myGAPIT <- GAPIT(
-  Y  = myY,                      # phenotype (Taxa + trait)
-  GD = myGD,                     # numeric genotype
-  GM = myGM,                     # SNP map
-  model = c("MLM", "FarmCPU", "BLINK"),
-  PCA.total = 3
-)
-```
+> **"Run a GWAS with BLINK on my maize data and give me the Manhattan and QQ plots."**
+> GAPIT-AI loads your genotype and phenotype files, runs BLINK, then generates and interprets the Manhattan and QQ plots.
+
+> **"Use GAGBLUP to predict phenotypes for 100 untested lines."**
+> GAPIT-AI runs GWAS-assisted GBLUP and reports the predicted breeding values and prediction accuracy.
+
+You never need to write R code yourself — the agent does it for you, based on the skill.
 
 ## Documentation
 
