@@ -24,7 +24,7 @@ You do not need a paid plan to load and try the skill, but your plan's model all
 
 ## Getting the GAPIT AI package
 
-The skill is distributed as a zip archive named `gapit-ai-v1.0-beta.1.2.zip`. Download it and unzip it into a folder on your computer. The archive contains the skill itself under `.trae/skills/gapit-expert/`, together with the data resources it needs: the GAPIT function file, the two mode-code templates, demo data, and the public question bank.
+The skill is distributed as a zip archive named `gapit-ai-v1.0-beta.1.3.zip`. Download it and unzip it into a folder on your computer. The archive contains the skill itself under `.trae/skills/gapit-expert/`, together with the data resources it needs: the GAPIT function file, the two mode-code templates, demo data, and the public question bank.
 
 The single most important file inside is `data/gapit-resources/code/gapit_functions.txt`. This one file holds the entire GAPIT function library. The generated R scripts load it directly with `source()` rather than calling `library(GAPIT)`. That design removes the most common installation problem users reported: R being unable to find the GAPIT package.
 
