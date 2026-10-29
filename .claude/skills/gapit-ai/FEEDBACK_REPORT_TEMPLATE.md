@@ -26,7 +26,7 @@ Each report contains the following sections in a fixed order; do not add, remove
 **Feedback ID**: GAPIT_AI_feedback_YYYYMMDD_NNN
 **Report date**: YYYY-MM-DD
 **Reporter**: [name / nickname]
-**Skill version**: [e.g. v1.0-beta.1.3]
+**Skill version**: [e.g. v1.0-beta.1.4]
 
 ## User needs
 [What task, question, or requirement the user raised, and what they expected the skill to do]

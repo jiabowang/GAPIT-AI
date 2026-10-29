@@ -146,6 +146,33 @@ description: "GAPIT AI (GAPIT5) expert skill for GWAS/GS analysis — installati
 ### 16. 多倍体适用性限制
 - 多倍体物种（>2 倍体）不建议使用基于混合模型的方法（MLM/CMLM/MLMM/SUPER/FarmCPU/BLINK 等），因 GAPIT 的亲缘矩阵与加性效应假设基于二倍体 0/1/2 编码；遇到多倍体数据时主动提示此限制，并建议改用多倍体专用工具（如 GWASpoly）。
 
+## 代码生成防错硬规则（v1.0-beta.1.4 新增）
+
+### 1. HapMap 转数值：只用主命令，不用子函数
+- 把 HapMap 格式基因型转成数值型 GD / GM 时，直接调用主命令 `GAPIT(G = myG, output.numerical = TRUE)`；GAPIT 会自动把 HapMap 转成 0/1/2 数值型，并输出 `GAPIT.Genotype.Numerical.txt`（数值 GD）与 `GAPIT.Genotype.map.txt`（GM）。
+- 禁止调用 `GAPIT.HapMap()`、`GAPIT.Genotype()`、`GAPIT.Numericalization()`、`GAPIT.HMP2Num()` 等子函数来完成转换（这些是 GAPIT 内部实现，返回对象易用错）。
+- 具体写法以 GWAS 模式代码中「HapMap → 数值型」独立参考块为准。
+
+### 2. 函数存在性校验（禁止编造函数）
+- 只能调用 `gapit_functions.txt` 中真实存在的函数；写代码前先在该文件中 `grep` 函数名，确认其存在与拼写。
+- 严禁凭记忆编造函数名（如 `GAPIT.Genotype.Numerical()`、`GAPIT.HapMap2Numerical()` 均不存在）。
+
+### 3. 完成前自检（不通过不得报告完成）
+- 报告"完成/成功"前，必须实际检查输出文件：是否存在、行数/列数是否合理、表头是否正确、缺失值是否已处理。
+- 任一不通过，不得报告完成，须继续修复后再验证。
+
+### 4. R 变量命名规则
+- R 变量名只允许字母、数字、下划线 `_`、点 `.`；禁止连字符 `-`（如 `tax-names` 非法，应写 `tax_names` 或 `tax.names`）。
+- 修同一处代码多次失败时，改为整文件重写，不要反复局部替换。
+
+### 5. 报错先回模板核对参数
+- 每次调用 `GAPIT()` 前，重新对照模式代码模板核对参数名：`G=` 只用于 HapMap 格式，`GD=` / `GM=` 用于数值型基因型。
+- 数值型基因型必须用 `GD=` + `GM=`，禁止误传给 `G=`（否则报 `Genotype data and map files should be in pair`）。
+- 遇到报错先回模板核对参数，不要先改无关部分。
+
+### 6. 反馈报告真实性
+- 由 AI 生成的反馈报告必须套用 `FEEDBACK_REPORT_TEMPLATE.md`，并如实区分"真正起作用的修复"与"尝试过但无效的改动"；不得把无效改动写成修复关键，不得漏记问题。
+
 ## 反馈报告格式硬规则（v1.0-beta.1.1 新增）
 
 ### 统一命名

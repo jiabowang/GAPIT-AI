@@ -36,7 +36,7 @@ rm(list = ls())
 
 # --- Path to the unzipped GAPIT AI skill package ------------------------------
 # This is where gapit_functions.txt is bundled.
-skill_dir <- "path/to/unzipped/gapit-ai-v1.0-beta.1.3"
+skill_dir <- "path/to/unzipped/gapit-ai-v1.0-beta.1.4"
 
 # --- Input files --------------------------------------------------------------
 # GD: numeric genotype (individuals x markers, first column = Taxa/ID)
@@ -45,6 +45,11 @@ skill_dir <- "path/to/unzipped/gapit-ai-v1.0-beta.1.3"
 geno_file <- "genotype_numeric.txt"      # numeric GD
 map_file  <- "SNP_information.txt"       # GM
 pheno_file <- NULL                       # e.g. "phenotype.txt" (optional)
+
+# --- Input format -------------------------------------------------------------
+# "numeric": GD (numeric) + GM (map) are provided directly (default).
+# "hapmap" : a single HapMap-format genotype file; GAPIT converts it to numeric.
+input_format <- "numeric"
 
 # Trait column name in pheno_file (used only if pheno_file is provided).
 trait_col <- NULL                        # if NULL, the 2nd column is used
@@ -107,15 +112,44 @@ if (!exists("GAPIT", mode = "function")) {
 }
 
 ## =============================================================================
-## 3. Load and validate input
+## 3. Load input (numeric directly, or HapMap auto-converted to numeric)
 ## =============================================================================
-if (!file.exists(geno_file)) stop("Genotype file not found: ", geno_file)
-if (!file.exists(map_file))  stop("Map file not found: ", map_file)
+# -----------------------------------------------------------------------------
+# HapMap -> numeric genotype (GD) + SNP map (GM)  [independent reference block]
+# -----------------------------------------------------------------------------
+# When the input genotype is in HapMap format, GAPIT converts it to numeric
+# 0/1/2 automatically when it is passed via G=. DO NOT call GAPIT.HapMap(),
+# GAPIT.Genotype(), GAPIT.Numericalization() or any other sub-function to do
+# the conversion — those are GAPIT internals and are easy to use incorrectly.
+# Set output.numerical=TRUE to also write the two numeric files to disk:
+#   GAPIT.Genotype.Numerical.txt -> numeric GD (Taxa + 0/1/2 markers)
+#   GAPIT.Genotype.map.txt       -> GM (SNP, Chromosome, Position)
+# -----------------------------------------------------------------------------
+if (input_format == "hapmap") {
+  hapmap_file <- "genotype.hmp.txt"     # HapMap-format genotype
+  if (!file.exists(hapmap_file)) stop("HapMap file not found: ", hapmap_file)
 
-myGD <- read.table(geno_file, header = TRUE, check.names = FALSE,
-                   stringsAsFactors = FALSE)
-myGM <- read.table(map_file,  header = TRUE, check.names = FALSE,
-                   stringsAsFactors = FALSE)
+  myG <- read.table(hapmap_file, header = FALSE, check.names = FALSE,
+                    stringsAsFactors = FALSE)
+
+  GAPIT(
+    G                = myG,    # HapMap genotype -> auto-converted to numeric
+    output.numerical = TRUE    # write GAPIT.Genotype.Numerical.txt + .map.txt
+  )
+
+  myGD <- read.table("GAPIT.Genotype.Numerical.txt", header = TRUE,
+                     check.names = FALSE)
+  myGM <- read.table("GAPIT.Genotype.map.txt", header = TRUE,
+                     check.names = FALSE)
+} else {
+  if (!file.exists(geno_file)) stop("Genotype file not found: ", geno_file)
+  if (!file.exists(map_file))  stop("Map file not found: ", map_file)
+
+  myGD <- read.table(geno_file, header = TRUE, check.names = FALSE,
+                     stringsAsFactors = FALSE)
+  myGM <- read.table(map_file,  header = TRUE, check.names = FALSE,
+                     stringsAsFactors = FALSE)
+}
 
 # Normalize ID column names to "Taxa".
 if (!"Taxa" %in% colnames(myGD)) colnames(myGD)[1] <- "Taxa"

@@ -2,7 +2,7 @@
 
 An AI-agent skill for GWAS and Genomic Selection, built on [GAPIT](https://github.com/jiabowang/GAPIT).
 
-![version](https://img.shields.io/badge/version-v1.0--beta.1.3-blue)
+![version](https://img.shields.io/badge/version-v1.0--beta.1.4-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![R](https://img.shields.io/badge/R-%3E%3D4.3.0-lightgrey)
 
@@ -19,9 +19,9 @@ Supported methods:
 
 | Package | Platform | Language | Description |
 |---|---|---|---|
-| `gapit-ai-trae-v1.0-beta.1.3.zip` | TRAE | 中文 | TRAE skill (self-contained) |
-| `gapit-ai-claude-v1.0-beta.1.3.zip` | Claude Code | English | Claude Code skill |
-| `gapit-ai-marketplace-v1.0-beta.1.3.zip` | TRAE Marketplace | 中文 | Uploadable to the TRAE plugin marketplace |
+| `gapit-ai-trae-v1.0-beta.1.4.zip` | TRAE | 中文 | TRAE skill (self-contained) |
+| `gapit-ai-claude-v1.0-beta.1.4.zip` | Claude Code | English | Claude Code skill |
+| `gapit-ai-marketplace-v1.0-beta.1.4.zip` | TRAE Marketplace | 中文 | Uploadable to the TRAE plugin marketplace |
 
 The three packages share the same knowledge base and mode code; they differ only in language and packaging target.
 

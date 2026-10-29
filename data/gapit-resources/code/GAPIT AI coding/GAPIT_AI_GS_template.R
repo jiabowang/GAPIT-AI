@@ -47,7 +47,7 @@ rm(list = ls())
 ## =============================================================================
 
 # --- Path to the unzipped GAPIT AI skill package ------------------------------
-skill_dir <- "path/to/unzipped/gapit-ai-v1.0-beta.1.3"
+skill_dir <- "path/to/unzipped/gapit-ai-v1.0-beta.1.4"
 
 # --- Input files --------------------------------------------------------------
 geno_file <- "genotype_numeric.txt"      # numeric GD (individuals x markers)

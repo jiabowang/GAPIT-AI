@@ -28,7 +28,7 @@ GAPIT_AI_feedback_YYYYMMDD_NNN.md
 **反馈编号**: GAPIT_AI_feedback_YYYYMMDD_NNN
 **报告日期**: YYYY-MM-DD
 **反馈者**: [姓名/昵称]
-**技能版本**: [例如 v1.0-beta.1.3]
+**技能版本**: [例如 v1.0-beta.1.4]
 
 ## 用户需求
 [用户提出了什么分析任务、问题或需求，期望技能帮他完成什么]

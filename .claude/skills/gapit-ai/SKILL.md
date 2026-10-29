@@ -149,6 +149,33 @@ The canonical, continuously updated source lives in this repository. All new kno
 ### 16. Polyploid applicability limit
 - For polyploid species (>2x), do not recommend mixed-model methods (MLM/CMLM/MLMM/SUPER/FarmCPU/BLINK, etc.) because GAPIT's kinship matrix and additive-effect assumptions are based on diploid 0/1/2 coding; proactively flag this limit for polyploid data and suggest dedicated polyploid tools (e.g. GWASpoly).
 
+## Code-Generation Error-Prevention Hard Rules (v1.0-beta.1.4)
+
+### 1. HapMap → numeric: use the main command only, no sub-functions
+- To convert HapMap-format genotype to numeric GD / GM, call the main command `GAPIT(G = myG, output.numerical = TRUE)`; GAPIT automatically converts HapMap to 0/1/2 numeric and writes `GAPIT.Genotype.Numerical.txt` (numeric GD) and `GAPIT.Genotype.map.txt` (GM).
+- Do NOT call sub-functions such as `GAPIT.HapMap()`, `GAPIT.Genotype()`, `GAPIT.Numericalization()`, or `GAPIT.HMP2Num()` to do the conversion (these are GAPIT internals whose return objects are easy to misuse).
+- Follow the "HapMap → numeric" independent reference block in the GWAS mode code.
+
+### 2. Function-existence verification (no invented functions)
+- Only call functions that actually exist in `gapit_functions.txt`; before writing code, `grep` the function name in that file to confirm existence and spelling.
+- Never invent function names from memory (e.g. `GAPIT.Genotype.Numerical()` and `GAPIT.HapMap2Numerical()` do not exist).
+
+### 3. Self-check before completion (do not report done otherwise)
+- Before reporting "done/success", actually inspect the output files: do they exist, are the row/column counts reasonable, is the header correct, are missing values handled.
+- If any check fails, do not report completion; keep fixing and re-verify.
+
+### 4. R variable naming rules
+- R variable names may only use letters, digits, underscore `_`, and dot `.`; hyphens `-` are forbidden (e.g. `tax-names` is illegal; use `tax_names` or `tax.names`).
+- When a single edit keeps failing, rewrite the whole file instead of repeatedly patching the same spot.
+
+### 5. On error, return to the template and re-check parameters
+- Before every `GAPIT()` call, re-check parameter names against the mode-code template: `G=` is for HapMap format only, while `GD=` / `GM=` are for numeric genotype.
+- Numeric genotype must use `GD=` + `GM=`; never pass it to `G=` (otherwise you get `Genotype data and map files should be in pair`).
+- On error, return to the template and re-check parameters before touching unrelated parts.
+
+### 6. Feedback report truthfulness
+- AI-generated feedback reports must follow `FEEDBACK_REPORT_TEMPLATE.md` and honestly distinguish "fixes that actually worked" from "changes that were tried but had no effect"; do not present an ineffective change as the key fix, and do not omit problems.
+
 ## Feedback Report Format Hard Rules (v1.0-beta.1.1)
 
 ### Unified Naming
@@ -355,7 +382,7 @@ GAPIT.[module].[file type].[model].[trait]([version]).extension
 
 **Multi-model integration** uses `file.output=FALSE` and manual output, for example:
 ```r
-skill_dir <- "path/to/gapit-ai-claude-v1.0-beta.1.3"
+skill_dir <- "path/to/gapit-ai-claude-v1.0-beta.1.4"
 source(file.path(skill_dir, "data/gapit-resources/code/gapit_functions.txt"))
 pheno_file <- "phenotype.txt"; geno_file <- "genotype_numeric.txt"; map_file <- "SNP_information.txt"
 myY <- read.table(pheno_file, head = TRUE)
@@ -437,7 +464,7 @@ Best when QTN count is moderate (10–15); comparable to MAS when QTN<10; better
 #### 3. Correct usage
 Must supply full genotype data and reference-population phenotypes.
 ```r
-skill_dir <- "path/to/gapit-ai-claude-v1.0-beta.1.3"
+skill_dir <- "path/to/gapit-ai-claude-v1.0-beta.1.4"
 source(file.path(skill_dir, "data/gapit-resources/code/gapit_functions.txt"))
 myY <- read.table("phenotype.txt", head = TRUE)          # phenotype
 myGD <- read.table("genotype_numeric.txt", head = TRUE)  # full genotype

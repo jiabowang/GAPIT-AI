@@ -47,7 +47,7 @@ rm(list = ls())
 ## =============================================================================
 
 # --- Path to the unzipped GAPIT AI skill package ------------------------------
-skill_dir <- "path/to/installed/gapit-ai"
+skill_dir <- "path/to/unzipped/gapit-ai-v1.0-beta.1.3"
 
 # --- Input files --------------------------------------------------------------
 geno_file <- "genotype_numeric.txt"      # numeric GD (individuals x markers)
@@ -108,7 +108,7 @@ for (pkg in c("EMMREML", "data.table")) {
 }
 cat("-------------------------------\n\n")
 
-gapit_fn <- file.path(skill_dir, "resources",
+gapit_fn <- file.path(skill_dir, "data", "gapit-resources", "code",
                       "gapit_functions.txt")
 if (!file.exists(gapit_fn)) {
   stop("gapit_functions.txt not found. Check skill_dir:\n", gapit_fn)

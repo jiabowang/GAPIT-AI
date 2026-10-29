@@ -47,8 +47,8 @@ cp -R ./.trae/skills/GAPIT-AI ~/.trae/skills/
 很多用户环境下 `library(GAPIT)` 并不成立。对外生成的 GAPIT 运行脚本，应默认从本技能包自带的函数文件加载：
 
 ```r
-# 设为你解压后的 gapit-ai-trae-v1.0-beta.1.3 目录
-skill_dir <- "path/to/gapit-ai-trae-v1.0-beta.1.3"
+# 设为你解压后的 gapit-ai-trae-v1.0-beta.1.4 目录
+skill_dir <- "path/to/gapit-ai-trae-v1.0-beta.1.4"
 
 # 直接加载 GAPIT 函数集合（推荐路径：本次已随 zip 同步到 data 目录）
 source(file.path(skill_dir, "data/gapit-resources/code/gapit_functions.txt"))
@@ -130,9 +130,9 @@ GAPIT 函数文件位于 `data/gapit-resources/code/gapit_functions.txt`，不�
 - 稳定版：验证后打包给测试者或其他用户的版本
 
 ### 推荐命名
-- `gapit-ai-trae-v1.0-beta.1.3.zip`
-- `gapit-ai-v1.0-beta.1.3.zip`
-- `gapit-ai-v1.0-beta.1.3.zip`
+- `gapit-ai-trae-v1.0-beta.1.4.zip`
+- `gapit-ai-v1.0-beta.1.4.zip`
+- `gapit-ai-v1.0-beta.1.4.zip`
 
 ## 常见问题
 

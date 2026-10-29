@@ -1,5 +1,19 @@
 # 变更记录
 
+## v1.0-beta.1.4
+
+### 反馈批次（2026-10-28 晚新增 4 份）驱动的修复与规则
+- 修复（P0 发布阻断）：`gapit_functions.txt` 末尾混入个人测试脚本（`rm(list=ls())` + 私有路径 `source()`/`setwd()`），任何用户首次 `source()` 即失败；已删除第 21145–21229 行，恢复为纯函数文件。
+- 硬规则新增「代码生成防错硬规则」章节（6 条，三份 SKILL.md）：
+  1. HapMap 转数值：只用主命令 `GAPIT(G=myG, output.numerical=TRUE)`，禁止调用 `GAPIT.HapMap()` 等子函数。
+  2. 函数存在性校验：只能调用 `gapit_functions.txt` 中真实存在的函数，写码前先 grep 确认。
+  3. 完成前自检：报告完成前必须检查输出文件的行列/表头/缺值。
+  4. R 变量命名规则：只用字母数字下划线点，禁止连字符；多次失败改整文件重写。
+  5. 报错先回模板核对参数：`G=` 仅 HapMap，`GD=`/`GM=` 用于数值型。
+  6. 反馈报告真实性：强制套模板，区分"真修复"与"无效改动"。
+- GWAS 模式代码新增「HapMap → 数值型」独立参考块（`GAPIT(G=myG, output.numerical=TRUE)`，输出 `GAPIT.Genotype.Numerical.txt` + `GAPIT.Genotype.map.txt`）。
+- 版本号由 v1.0-beta.1.3 升级为 v1.0-beta.1.4。
+
 ## v1.0-beta.1.3
 
 ### 反馈批次（2026-10-28 新增 4 份）驱动的修复与规则
